@@ -21,7 +21,6 @@ import org.testcontainers.utility.DockerImageName;
 public class DataRedisContainerTest {
 
     private static final Logger log = LogManager.getLogger(DataRedisContainerTest.class);
-
     private static final int REDIS_PORT = 6379;
 
     @Autowired
@@ -39,6 +38,7 @@ public class DataRedisContainerTest {
 
             GenericContainer<?> redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(REDIS_PORT);
             redis.start();
+
             while (!redis.isRunning()) {
                 busyWaitIMSorry();
             }
