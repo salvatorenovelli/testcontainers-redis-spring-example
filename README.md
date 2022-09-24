@@ -11,22 +11,22 @@ The logic to initialise the container and inject it in spring is in this file: [
 
 The trick is in using `ApplicationContextInitializer<ConfigurableApplicationContext>` to inject the correct host/port into spring context
 
-    static class RedisContainerContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+```java
+static class RedisContainerContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
 
-        @Override
-        public void initialize(ConfigurableApplicationContext applicationContext) {
+        GenericContainer<?> redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine"))
+                                             .withExposedPorts(REDIS_PORT);
+        redis.start();
 
-            GenericContainer<?> redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(REDIS_PORT);
-            redis.start();
+        log.info("Redis server is available at {}:{}", redis.getHost(), redis.getMappedPort(REDIS_PORT));
 
-            log.info("Redis server is available at {}:{}", redis.getHost(), redis.getMappedPort(REDIS_PORT));
-
-            TestPropertyValues values = TestPropertyValues.of(
-                    "spring.redis.host=" + redis.getHost(),
-                    "spring.redis.port=" + redis.getMappedPort(REDIS_PORT)
-            );
-            values.applyTo(applicationContext);
-        }
-
+        TestPropertyValues values = TestPropertyValues.of(
+                "spring.redis.host=" + redis.getHost(),
+                "spring.redis.port=" + redis.getMappedPort(REDIS_PORT)
+        );
+        values.applyTo(applicationContext);
     }
-
+}
+```
