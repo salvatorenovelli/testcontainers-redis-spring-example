@@ -1,6 +1,6 @@
 # Testcontainers Redis Spring Example
 
-Example on how to create a redis testcontainer that work with Spring boot without having to do nasty things with hardcoded ports
+Example on how to create a redis [Testcontainer](https://www.testcontainers.org/) that work with Spring boot without having to do nasty things with hardcoded ports
 or even worse non isolated tests.
 
 Required a bit of digging and testing so hope this will be the end of your copy/paste/modify journey
