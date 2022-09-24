@@ -1,17 +1,14 @@
-# Testcontainers Redis Spring Example
+package com.example;
 
-Example on how to create a redis [Testcontainer](https://www.testcontainers.org/) that work with Spring boot without having to do nasty things with hardcoded ports
-or even worse non isolated tests.
+import org.junit.jupiter.api.AfterEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
 
-Required a bit of digging and testing so hope this will be the end of your copy/paste/modify journey
-
-
-The logic to initialise the container and inject it in spring is in this file: [AbstractRedisIntegrationTest.java](src/test/java/com/example/AbstractRedisIntegrationTest.java)
-
-
-The trick is in using `@DynamicPropertySource` annotation to inject the correct host/port into spring context
-
-```java
 @SpringBootTest
 public abstract class AbstractRedisIntegrationTest {
 
@@ -33,4 +30,3 @@ public abstract class AbstractRedisIntegrationTest {
         registry.add("spring.redis.port", redis::getFirstMappedPort);
     }
 }
-```

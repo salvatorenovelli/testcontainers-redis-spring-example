@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class ItalianDictionaryTest extends DataRedisContainerTest {
+class ItalianDictionaryTest extends AbstractRedisIntegrationTest {
 
     @Autowired
     ItalianDictionary sut;
